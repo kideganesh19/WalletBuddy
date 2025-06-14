@@ -10,5 +10,7 @@ import com.walletBuddy.walletservice.models.enums.WalletStatus;
 public interface WalletRepository extends JpaRepository<Wallet,String>{
 	
 	Optional<Wallet> findByIdAndStatus(String walletId, WalletStatus walletStatus);
+	
+	Optional<Wallet> findByUserId(String userId);
 
 }

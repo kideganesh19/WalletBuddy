@@ -1,8 +1,11 @@
 package com.walletBuddy.walletservice.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.walletBuddy.walletservice.exception.WalletAlreadyExist;
 import com.walletBuddy.walletservice.exception.WalletNotFoundException;
 import com.walletBuddy.walletservice.models.entity.Wallet;
 import com.walletBuddy.walletservice.models.enums.WalletStatus;
@@ -28,6 +31,19 @@ public class WalletService {
 	
 	public Wallet saveOrUpdate(Wallet wallet) {
 		return walletRepository.save(wallet);
+	}
+	
+	public Wallet createNewWallet(String id) {
+		Optional<Wallet> wallet = walletRepository.findByUserId(id);
+		if(wallet.isPresent()) {
+			throw new WalletAlreadyExist();
+		}
+		Wallet newWallet = new Wallet();
+		newWallet.setId(id);
+		newWallet.setCurrentBalance(0);
+		newWallet.setStatus(WalletStatus.ACTIVE);
+		
+		return walletRepository.save(newWallet);
 	}
 	
 
