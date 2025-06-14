@@ -1,5 +1,7 @@
 package com.walletBuddy.userservice.models.request;
 
+import java.util.Set;
+
 import com.walletBuddy.userservice.models.entity.UserInfo;
 import com.walletBuddy.userservice.models.enums.UserType;
 
@@ -20,6 +22,11 @@ public class CreateUserRequest {
 	String emailId;
 	@NotNull
 	UserType userType;
+	@NotNull
+	String passwordRaw;
+
+	@NotNull
+	Set<String> roles;
 	
 	public UserInfo toUserInfo() {
 		UserInfo userInfo = new UserInfo();
@@ -27,6 +34,8 @@ public class CreateUserRequest {
 		userInfo.setEmailId(emailId);
 		userInfo.setPhoneNumber(phoneNumber);
 		userInfo.setUserType(userType);
+		userInfo.setPasswordRaw(passwordRaw);
+		userInfo.setRoles(roles);
 		return userInfo;
 	}
 
@@ -60,6 +69,22 @@ public class CreateUserRequest {
 
 	public void setUserType(UserType userType) {
 		this.userType = userType;
+	}
+	
+	public String getPasswordRaw() {
+		return passwordRaw;
+	}
+
+	public void setPasswordRaw(String passwordRaw) {
+		this.passwordRaw = passwordRaw;
+	}
+
+	public Set<String> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<String> roles) {
+		this.roles = roles;
 	}
 
 	public CreateUserRequest(@NotBlank String name, @Positive Long phoneNumber, @Email String emailId,
