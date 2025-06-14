@@ -9,5 +9,7 @@ import com.walletBuddy.userservice.models.entity.UserInfo;
 public interface UserRepository extends JpaRepository<UserInfo, String>{
 	
 	Optional<UserInfo> findByEmailId(String emailId);
+	
+	Optional<UserInfo> findById(String id);
 
 }

@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.walletBuddy.userservice.exception.DuplicateUserException;
+import com.walletBuddy.userservice.exception.UserDoesNotExist;
 import com.walletBuddy.userservice.models.entity.UserInfo;
 import com.walletBuddy.userservice.models.request.CreateUserRequest;
 import com.walletBuddy.userservice.repository.UserRepository;
@@ -45,6 +46,14 @@ public class UserService implements UserDetailsService{
 		userInfo.setRoles(Collections.singleton("ROLE_ANONYMOUS"));
 		return userInfo;
     }
+	
+	public UserInfo getUserById(String id) {
+		Optional<UserInfo> user = userRepository.findById(id);
+		if(user.isEmpty()) {
+			throw new UserDoesNotExist();
+		}
+		return user.get();
+	}
 
 	@Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
