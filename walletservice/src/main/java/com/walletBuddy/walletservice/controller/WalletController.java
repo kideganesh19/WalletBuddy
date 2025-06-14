@@ -1,6 +1,7 @@
 package com.walletBuddy.walletservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.walletBuddy.walletservice.models.entity.Wallet;
@@ -46,7 +48,12 @@ public class WalletController {
 		
 	}
 	
-	@GetMapping(value="/{walletId}/transactions")
+	@GetMapping(value="/{walletId}/transactions",produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Page<WalletTransaction>> getTransactionsForId(@PathVariable String walletId, @RequestParam("pageNumber") Integer pageNumber){
+		
+		var transactions = walletTransactionService.getTxnById(walletId, pageNumber);
+		return new ResponseEntity<>(transactions,HttpStatus.OK);
+	}
 	
 
 }
