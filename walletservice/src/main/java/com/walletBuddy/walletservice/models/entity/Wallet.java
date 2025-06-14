@@ -51,4 +51,62 @@ public class Wallet {
         }
     }
 
+	public String getId() {
+		return Id;
+	}
+
+	public void setId(String id) {
+		Id = id;
+	}
+
+	public String getUserId() {
+		return UserId;
+	}
+
+	public void setUserId(String userId) {
+		UserId = userId;
+	}
+
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+
+	public WalletStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(WalletStatus status) {
+		this.status = status;
+	}
+
+	public double getCurrentBalance() {
+		return currentBalance;
+	}
+
+	public void setCurrentBalance(double currentBalance) {
+		this.currentBalance = currentBalance;
+	}
+
+	public Instant getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Instant createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Instant getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Instant updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+	
+	
+
 }
