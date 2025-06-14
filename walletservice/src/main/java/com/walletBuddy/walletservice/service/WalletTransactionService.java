@@ -2,6 +2,8 @@ package com.walletBuddy.walletservice.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.walletBuddy.walletservice.exception.InsufficientBalanceException;
@@ -57,6 +59,13 @@ public class WalletTransactionService {
 		walletService.saveOrUpdate(creditWallet);
 		
 		return walletTransactionRepository.save(walletTransaction);
+	}
+	
+	
+	public Page<WalletTransaction> getTxnById(String walletId, Integer pageNumber){
+		
+		PageRequest pageRequest = PageRequest.of(pageNumber, 8);
+		return walletTransactionRepository.findByToWalletIdOrFromWalletIdOrderByUpdatedAtDesc(walletId, walletId, pageRequest);
 	}
 
 }

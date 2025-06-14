@@ -38,13 +38,15 @@ public class WalletController {
 		
 	}
 	
-	@PostMapping(value="/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value="/create-transaction", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<WalletTransaction> createTransaction( @Valid @RequestBody WalletRequest request){
 		
 		var walletTxnEntity = walletTransactionService.createTxn(request);
 		return new ResponseEntity<>(walletTxnEntity, HttpStatus.OK);
 		
 	}
+	
+	@GetMapping(value="/{walletId}/transactions")
 	
 
 }
