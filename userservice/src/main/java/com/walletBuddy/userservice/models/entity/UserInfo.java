@@ -2,9 +2,16 @@ package com.walletBuddy.userservice.models.entity;
 
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.vladmihalcea.hibernate.type.json.JsonType;
 import com.walletBuddy.userservice.models.enums.*;
 
 import jakarta.persistence.Entity;
@@ -12,7 +19,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(indexes = {@Index(name = "UNIQUE_EMAIL", columnList = "emailId", unique = true)})
-public class UserInfo{
+public class UserInfo implements UserDetails{
 
 
     @Id
@@ -38,6 +45,14 @@ public class UserInfo{
 
     @UpdateTimestamp
     LocalDateTime updatedAt;
+    
+    String password;
+    
+    String passwordRaw;
+    
+    @Type(JsonType.class)
+    @Column(columnDefinition = "json")
+    private Set<String> roles;
 
 
     @PrePersist
@@ -124,6 +139,33 @@ public class UserInfo{
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+	
+	
+
+
+	public Set<String> getRoles() {
+		return roles;
+	}
+
+
+	public void setRoles(Set<String> roles) {
+		this.roles = roles;
+	}
+	
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public void setPasswordRaw(String passwordRaw) {
+		this.passwordRaw = passwordRaw;
+	}
+	
+	public String getPasswordRaw() {
+		return passwordRaw;
+	}
+	
 
 
 	@Override
@@ -148,4 +190,40 @@ public class UserInfo{
     
 	public UserInfo() {
 	}
+
+
+	@Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getPassword() {
+        return null;
+    }
+
+    @Override
+    public String getUsername() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return userStatus == UserStatus.ACTIVE;
+    }
 }
