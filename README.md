@@ -21,7 +21,7 @@ WalletBuddy consists of 4 core microservices:
 1. **User Service** – Handles onboarding, authentication, and profile management.
 2. **Wallet Service** – Manages wallet balance, credits/debits, and transaction logs.
 3. **Reward Service** – Generates and assigns user rewards based on wallet activity.
-4. **Notification Service** – Sends transactional emails via integrated mail APIs.
+4. **Notification Service** – Sends transactional emails and User creation emails via integrated mail APIs.
 
 All services communicate via **Kafka topics**, ensuring loose coupling and resilience.
 
